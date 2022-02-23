@@ -1,8 +1,19 @@
 const express = require('express')
 const multer = require('multer')
 
+const storage = multer.diskStorage({
 
-const upload = multer({ dest: 'uploads/' })
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/')
+    },
+
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+
+})
+
+const upload = multer({ storage })
 
 const app = express(); 
 
